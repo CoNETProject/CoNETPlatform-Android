@@ -1,0 +1,17 @@
+{
+ "name": "CoNET platform",
+ "version": "0.0.1",
+ "description": "CoNET platform",
+ "main": "main.js",
+ "author": {
+  "name": "CoNET Technology Inc.",
+  "email": "info@CoNETTech.ca"
+ },
+ "license": "",
+ "dependencies": {
+  "conet": "^1.0.4"
+ },
+ "devDependencies": {
+  "@types/node": "^9.6.6"
+ }
+}
