@@ -1,16 +1,19 @@
 package ca.conettech.conetplatformandroid;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.content.Intent;
 import java.net.*;
 import java.io.*;
 
@@ -24,68 +27,50 @@ public class MainActivity extends AppCompatActivity {
 
     //We just want one instance of node running in the background.
     public static boolean _startedNodeAlready=false;
-
+    public static int copyCpunt = 6000;
+    public static int totalFile = 6400;
+    public static int waiting = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final TextView textViewVersions = (TextView) findViewById(R.id.textView112);
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar4);
+        progressBar.setProgress(0);
+        //progressBar.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
 
+        textViewVersions.setText( "Start up!"  );
         if( !_startedNodeAlready ) {
-            _startedNodeAlready=true;
+            _startedNodeAlready = true;
+            copyCpunt = 0;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     //The path where we expect the node project to be at runtime.
-                    String nodeDir=getApplicationContext().getFilesDir().getAbsolutePath()+"/nodejs-project";
+                    String nodeDir = getApplicationContext().getFilesDir().getAbsolutePath() + "/nodejs-project";
                     if (wasAPKUpdated()) {
                         //Recursively delete any existing nodejs-project.
-                        File nodeDirReference=new File(nodeDir);
+                        File nodeDirReference = new File(nodeDir);
                         if (nodeDirReference.exists()) {
                             deleteFolderRecursively(new File(nodeDir));
                         }
                         //Copy the node project from assets into the application's data path.
-                        copyAssetFolder(getApplicationContext().getAssets(), "nodejs-project", nodeDir);
+                        copyAssetFolder(progressBar, getApplicationContext().getAssets(), "nodejs-project", nodeDir);
 
-                        saveLastUpdateTime();
+                        //saveLastUpdateTime();
                     }
                     startNodeWithArguments(new String[]{"node",
-                            nodeDir+"/main.js"
+                            nodeDir + "/main.js"
                     });
+
+
                 }
             }).start();
         }
+        waitingOpenBrowser ( textViewVersions );
 
-        final Button buttonVersions = (Button) findViewById(R.id.btVersions);
-        final TextView textViewVersions = (TextView) findViewById(R.id.tvVersions);
 
-        buttonVersions.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
 
-                //Network operations should be done in the background.
-                new AsyncTask<Void,Void,String>() {
-                    @Override
-                    protected String doInBackground(Void... params) {
-                        String nodeResponse="";
-                        try {
-                            URL localNodeServer = new URL("http://localhost:3000/");
-                            BufferedReader in = new BufferedReader(
-                                    new InputStreamReader(localNodeServer.openStream()));
-                            String inputLine;
-                            while ((inputLine = in.readLine()) != null)
-                                nodeResponse=nodeResponse+inputLine;
-                            in.close();
-                        } catch (Exception ex) {
-                            nodeResponse=ex.toString();
-                        }
-                        return nodeResponse;
-                    }
-                    @Override
-                    protected void onPostExecute(String result) {
-                        textViewVersions.setText(result);
-                    }
-                }.execute();
-            }
-        });
 
     }
 
@@ -93,7 +78,86 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
+    /**
+     * A native method that is implemented by the 'native-lib' native library,
+     * which is packaged with this application.
+     */
     public native Integer startNodeWithArguments(String[] arguments);
+
+
+
+    private void waitingOpenBrowser (final TextView text) {
+        waiting += 1;
+
+
+        text.setText( "try time:[" + waiting + "], total copy [" + copyCpunt +"]");
+        new android.os.Handler().postDelayed(
+            new Runnable() {
+                public void run() {
+                    new AsyncTask<Void,Void,String>() {
+                        boolean openBrowser = true;
+                        @Override
+                        protected String doInBackground(Void... params) {
+                            String nodeResponse="";
+
+                            try {
+                                URL localNodeServer = new URL("http://localhost:3000/");
+                                BufferedReader in = new BufferedReader(
+                                        new InputStreamReader(localNodeServer.openStream()));
+                                String inputLine;
+                                while ((inputLine = in.readLine()) != null)
+                                    nodeResponse=nodeResponse+inputLine;
+                                in.close();
+
+
+                            } catch (Exception ex) {
+                                openBrowser = false;
+                            }
+
+                            return nodeResponse;
+                        }
+                        @Override
+                        protected void onPostExecute(String result) {
+                            if (!openBrowser) {
+                                waitingOpenBrowser ( text );
+                            } else {
+                                final Intent browserIntent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://127.0.0.1:3000/"));
+                                startActivity(browserIntent);
+                                finish();
+                            }
+
+                        }
+                    }.execute();
+
+                }
+            },5000 );
+    }
+
+
+    private void checkNodeJSReady () {
+        new AsyncTask<Void,Void,String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String nodeResponse="";
+                try {
+                    URL localNodeServer = new URL("http://localhost:3000/");
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(localNodeServer.openStream()));
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null)
+                        nodeResponse=nodeResponse+inputLine;
+                    in.close();
+                } catch (Exception ex) {
+                    nodeResponse=ex.toString();
+                }
+                return nodeResponse;
+            }
+            @Override
+            protected void onPostExecute(String result) {
+
+            }
+        }.execute();
+    }
 
     private boolean wasAPKUpdated() {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("NODEJS_MOBILE_PREFS", Context.MODE_PRIVATE);
@@ -140,20 +204,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private static boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, String toPath) {
+    private static boolean copyAssetFolder(final ProgressBar progressBar, AssetManager assetManager, String fromAssetPath, String toPath) {
         try {
             String[] files = assetManager.list(fromAssetPath);
             boolean res = true;
 
             if (files.length==0) {
+
                 //If it's a file, it won't have any assets "inside" it.
+                copyCpunt += 1;
+                final int uu = Math.round(copyCpunt*100/totalFile);
+                progressBar.setProgress(uu);
                 res &= copyAsset(assetManager,
                         fromAssetPath,
                         toPath);
             } else {
                 new File(toPath).mkdirs();
                 for (String file : files)
-                    res &= copyAssetFolder(assetManager,
+                    res &= copyAssetFolder(progressBar, assetManager,
                             fromAssetPath + "/" + file,
                             toPath + "/" + file);
             }
@@ -165,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static boolean copyAsset(AssetManager assetManager, String fromAssetPath, String toPath) {
+
         InputStream in = null;
         OutputStream out = null;
         try {

@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="greyProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:indeterminateTintMode">src_atop</item>
+        <item name="android:indeterminateTint">@android:color/holo_green_dark</item>
+    </style>
+
 </resources>
