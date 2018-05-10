@@ -1,5 +1,5 @@
 {
- "name": "CoNET platform",
+ "name": "conet_platform",
  "version": "0.0.1",
  "description": "CoNET platform",
  "main": "main.js",
@@ -7,11 +7,11 @@
   "name": "CoNET Technology Inc.",
   "email": "info@CoNETTech.ca"
  },
- "license": "",
+ "license": "MIT",
  "dependencies": {
-  "conet": "^1.0.4"
+  "conet": "^1.0.26"
  },
  "devDependencies": {
-  "@types/node": "^9.6.6"
+  "@types/node": "^9.6.14"
  }
 }

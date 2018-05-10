@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                         //saveLastUpdateTime();
                     }
                     startNodeWithArguments(new String[]{"node",
-                            nodeDir + "/main.js"
+                            nodeDir + "/main.js", nodeDir
                     });
 
 
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                             if (!openBrowser) {
                                 waitingOpenBrowser ( text );
                             } else {
-                                final Intent browserIntent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://127.0.0.1:3000/"));
+                                final Intent browserIntent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://localhost:3000/"));
                                 startActivity(browserIntent);
                                 finish();
                             }
