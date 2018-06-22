@@ -3,6 +3,8 @@
 [![Gitter](https://img.shields.io/badge/chat-on%20gitter-blue.svg)](https://gitter.im/QTGate/Lobby)
 [![Known Vulnerabilities](https://snyk.io/test/github/qtgate/qtgate-desktop-client/badge.svg)](https://snyk.io/test/github/qtgate/qtgate-desktop-client)
 
+### [The latest 最新版 v1.0.0](https://github.com/QTGate/CoNETPlatform-Android/releases/download/untagged-3857a6510c0ca927145b/app-release.apk)
+
 ## Description
 ![http protocol](/resources/CoPlatform.png?raw=true)
 ### CoNET platform as product of [CoNET](https://github.com/QTGate/CoNET) provides a series of services that allows users to improve their security, privacy and freedom on the Internet

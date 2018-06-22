@@ -27,12 +27,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //We just want one instance of node running in the background.
-    public static boolean _startedNodeAlready=false;
+    public static boolean _startedNodeAlready = false;
     public static int copyCpunt = 6000;
     public static int totalFile = 6400;
     public static int waiting = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (!this.isTaskRoot() && getIntent() != null) {
+            String action = getIntent().getAction();
+            if ( getIntent().hasCategory( Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN.equals( action )) {
+                finish();
+                return;
+            }
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final TextView textViewVersions = (TextView) findViewById(R.id.textView112);
