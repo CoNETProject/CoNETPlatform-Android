@@ -16,6 +16,7 @@ import android.content.res.AssetManager;
 import android.content.Intent;
 import java.net.*;
 import java.io.*;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -231,6 +232,8 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    final static Pattern pp = Pattern.compile(".(js$|json$)",Pattern.CASE_INSENSITIVE);
 
     private static boolean copyAsset(AssetManager assetManager, String fromAssetPath, String toPath) {
 
