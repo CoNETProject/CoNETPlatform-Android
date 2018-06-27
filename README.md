@@ -6,7 +6,7 @@
 ### [The latest 最新版 v1.0.1](https://github.com/QTGate/CoNETPlatform-Android/releases/download/v1.0.1/app-release.apk)
 
 ## Description
-![http protocol](/resources/CoPlatform.png?raw=true)
+![http protocol](/resources/12222.png?raw=true)
 ### CoNET platform as product of [CoNET](https://github.com/QTGate/CoNET) provides a series of services that allows users to improve their security, privacy and freedom on the Internet
 - All other devices may use CoNET platform service via local website after launching CoNET platform.
 - CoNET platform provide a local DNS server that allowing its users to keep PRIVACY and ENCRYPTION.
