@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public static int waiting = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /*
         if (!this.isTaskRoot() && getIntent() != null) {
             String action = getIntent().getAction();
             if ( getIntent().hasCategory( Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN.equals( action )) {
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
+        */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final TextView textViewVersions = (TextView) findViewById(R.id.textView112);
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setProgress(0);
         //progressBar.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
 
-        textViewVersions.setText( "Start up!"  );
+        textViewVersions.setText( "Start up!" );
         if( !_startedNodeAlready ) {
             _startedNodeAlready = true;
             copyCpunt = 0;
@@ -59,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
                     if (wasAPKUpdated()) {
                         //Recursively delete any existing nodejs-project.
                         File nodeDirReference = new File(nodeDir);
-                        if (nodeDirReference.exists()) {
-                            deleteFolderRecursively(new File(nodeDir));
+                        if ( nodeDirReference.exists ()) {
+                            deleteFolderRecursively ( new File(nodeDir));
                         }
                         //Copy the node project from assets into the application's data path.
-                        copyAssetFolder(progressBar, getApplicationContext().getAssets(), "nodejs-project", nodeDir);
+                        copyAssetFolder (progressBar, getApplicationContext().getAssets(), "nodejs-project", nodeDir);
 
                         //saveLastUpdateTime();
                     }
