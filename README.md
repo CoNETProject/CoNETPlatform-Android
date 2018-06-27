@@ -3,7 +3,7 @@
 [![Gitter](https://img.shields.io/badge/chat-on%20gitter-blue.svg)](https://gitter.im/QTGate/Lobby)
 [![Known Vulnerabilities](https://snyk.io/test/github/qtgate/qtgate-desktop-client/badge.svg)](https://snyk.io/test/github/qtgate/qtgate-desktop-client)
 
-### [The latest 最新版 v1.0.0](https://github.com/QTGate/CoNETPlatform-Android/releases/download/v1.0.0/app-release.apk)
+### [The latest 最新版 v1.0.1](https://github.com/QTGate/CoNETPlatform-Android/releases/download/v1.0.1/app-release.apk)
 
 ## Description
 ![http protocol](/resources/CoPlatform.png?raw=true)
