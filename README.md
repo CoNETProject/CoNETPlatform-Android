@@ -3,8 +3,8 @@
 [![Gitter](https://img.shields.io/badge/chat-on%20gitter-blue.svg)](https://gitter.im/QTGate/Lobby)
 [![Known Vulnerabilities](https://snyk.io/test/github/qtgate/qtgate-desktop-client/badge.svg)](https://snyk.io/test/github/qtgate/qtgate-desktop-client)
 
-### Request Android > v8.0, Androidバージョン8.0以上が必要, 當前版本只能安裝在安卓版本8以上
-### [The latest 最新版 v1.0.2](https://github.com/QTGate/CoNETPlatform-Android/releases/download/v1.0.1/app-release.apk)
+### Request Android > v6.0 and Chromo, Androidバージョン6.0以上とChromeが必要, 需要安卓版本6以上和Chrome瀏覽器
+### [The latest 最新版 v1.0.2](https://github.com/QTGate/CoNETPlatform-Android/releases/download/v1.0.2/app-release.apk)
 
 ## Description
 ![http protocol](/resources/12222.png?raw=true)
