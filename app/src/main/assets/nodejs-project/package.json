@@ -1,6 +1,6 @@
 {
  "name": "conet_platform",
- "version": "0.0.1",
+ "version": "0.0.2",
  "description": "CoNET platform",
  "main": "main.js",
  "author": {
@@ -9,7 +9,7 @@
  },
  "license": "MIT",
  "dependencies": {
-  "conet": "2.0.16"
+  "conet": "^2.0.16"
  },
  "devDependencies": {
   "@types/node": "^9.6.22"
